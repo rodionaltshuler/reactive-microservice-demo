@@ -1,1 +1,7 @@
 server.port: 6002
+
+exchange:
+  url: https://bittrex.com/api/v1.1
+  interval: 3
+  defaultMarket: usd-btc
+
