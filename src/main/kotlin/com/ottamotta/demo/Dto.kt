@@ -1,6 +1,6 @@
 package com.ottamotta.demo
 
-class TickEvent(val tick : Ticker, val market : String, val timestamp : Long)
+data class TickEvent(val tick : Ticker, val market : String, val timestamp : Long)
 
 data class TickerResponse(val success: Boolean = true, val message: String = "", val result : Ticker)
 

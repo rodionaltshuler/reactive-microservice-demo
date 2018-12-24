@@ -2,7 +2,7 @@
 
 #### It's a demo project to show (and get hands-on experience) with the following features Spring5 provides:
 
-1. Kotlin support: Bean definition functional DSL and Route functional DSL specifically
+1. Kotlin support: Route functional DSL
 2. Use reactive web client WebClient instead of Feign
 3. Provide SSE (server-sent events) based API
 4. Integrate this features with components microservice usually use (Hystrix for example)
