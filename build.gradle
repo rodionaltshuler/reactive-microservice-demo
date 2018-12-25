@@ -45,18 +45,18 @@ ext['springCloudVersion'] = 'Greenwich.RC1'
 
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
-    //implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-data-redis-reactive')
+    //implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
-    //implementation('org.springframework.cloud:spring-cloud-starter-aws')
-    //implementation('org.springframework.cloud:spring-cloud-starter-aws-jdbc')
     implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
     implementation('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    //runtimeOnly('org.postgresql:postgresql')
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('io.projectreactor:reactor-test')
+
 }
 
 dependencyManagement {

@@ -1,4 +1,4 @@
-server.port: 6002
+server.port: ${PORT:6002}
 
 exchange:
   url: https://bittrex.com/api/v1.1

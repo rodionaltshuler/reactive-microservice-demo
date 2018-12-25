@@ -10,12 +10,17 @@ import org.springframework.web.reactive.function.server.router
 class RoutesConfiguration {
 
     @Bean
-    fun route(exchangeService: ExchangeService, env: Environment) =  router {
+    fun route(exchangeService: ExchangeService, repository: TickHistoryRepository, env: Environment) = router {
         GET("/hello") { ok().syncBody(SampleResponse()) }
         GET("/tick") {
             val market = it.queryParam("market").orElse(env.getProperty("exchange.defaultMarket"))
             ok().bodyToServerSentEvents(
                     exchangeService.observe(market))
+        }
+        GET("/history/{market}") {
+            //TODO add to and from query params
+            val market = it.pathVariable("market")
+            ok().body(repository.findAll(market, 0, 0), TickerWithTS::class.java)
         }
     }
 
