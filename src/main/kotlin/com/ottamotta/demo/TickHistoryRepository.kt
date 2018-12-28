@@ -11,8 +11,9 @@ class TickHistoryRepository(val redis : ReactiveRedisOperations<String, TickerWi
     val PREFIX = "history"
 
     fun findAll(market: String, from: Long, to: Long) : Flux<TickerWithTS> {
-        //TODO get only within timerange specified
+        fun returnAllValues() = to <= 0  || from < 0
         return redis.opsForList().range(PREFIX + market, 0, -1)
+                .filter { returnAllValues() || it.ts in from..to }
     }
 
     fun save(market : String, ticker : TickerWithTS) : Mono<Long> =
