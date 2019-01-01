@@ -11,7 +11,10 @@ import java.util.*
 class RoutesConfiguration {
 
     @Bean
-    fun route(exchangeService: ExchangeService, repository: TickHistoryRepository, env: Environment) = router {
+    fun route(exchangeService: ExchangeService,
+              streamService : StreamingService,
+              repository: TickHistoryRepository,
+              env: Environment) = router {
         GET("/hello") { ok().syncBody(SampleResponse()) }
         GET("/tick") {
             val market = it.queryParam("market").orElse(env.getProperty("exchange.defaultMarket"))
@@ -31,6 +34,22 @@ class RoutesConfiguration {
 
             val market = it.pathVariable("market")
             ok().body(repository.findAll(market, from, to), TickerWithTS::class.java)
+        }
+
+        GET("/streams/range/{market}") {
+            System.out.println("Getting stream for ${it.pathVariable("market")}")
+            ok().bodyToServerSentEvents(streamService.range(it.pathVariable("market")))
+        }
+
+        GET("/streams/{market}") {
+            System.out.println("Getting stream for ${it.pathVariable("market")}")
+            ok().bodyToServerSentEvents(streamService.listen(it.pathVariable("market")))
+        }
+
+        POST("/streams/{market}") {
+            it.bodyToMono(String::class.java)
+                    .flatMap { s -> ok().body(streamService.push(it.pathVariable("market"), s), String::class.java)}
+
         }
     }
 

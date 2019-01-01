@@ -1,5 +1,6 @@
 package com.ottamotta.demo
 
+import io.lettuce.core.api.reactive.RedisStreamReactiveCommands
 import org.springframework.data.redis.core.ReactiveRedisOperations
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -18,5 +19,9 @@ class TickHistoryRepository(val redis : ReactiveRedisOperations<String, TickerWi
 
     fun save(market : String, ticker : TickerWithTS) : Mono<Long> =
          redis.opsForList().rightPush(PREFIX + market, ticker)
+
+    /*fun push(market: String, ticker: TickerWithTS) {
+        RedisStreamReactiveCommands
+    }*/
 
 }

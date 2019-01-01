@@ -2,6 +2,7 @@ package com.ottamotta.demo
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.lettuce.core.RedisClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
@@ -10,10 +11,11 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
+import io.lettuce.core.RedisURI
 
 
 @Configuration
-class CacheConfiguration {
+class RedisConfiguration {
 
 
     @Bean
@@ -43,5 +45,16 @@ class CacheConfiguration {
         return ReactiveRedisTemplate<String, TickerWithTS>(factory, context)
     }
 
+    @Bean
+    fun streamExampleService() : StreamingService {
+        val redisURI = RedisURI.builder()
+                .withHost("localhost")
+                .withPort(6379)
+                .build()
+
+        val client = RedisClient.create(redisURI)
+        return StreamingService(client)
+
+    }
 
 }
