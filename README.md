@@ -15,7 +15,8 @@ Run from terminal and observe ticks from Bittrex crypto exchange delivered with 
 `curl -X GET http://localhost:6002/tick?market=usd-btc`
 
 Push data item to stream:
-`curl -X POST http://localhost:6002/streams/btc-usd \ -d someplaintextdata`
+`curl -X POST http://localhost:6002/streams/{stream-name} -d someplaintextdata`
+
 
 Observe events stream and get new items in real time as SSE (use in browser, Postman doesn't support SSE yet)
-`http://localhost:6002/streams/btc-usd`
+`http://localhost:6002/streams/{stream-name}`
